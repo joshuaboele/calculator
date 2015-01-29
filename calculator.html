@@ -1,0 +1,124 @@
+<head>
+	<title>Joshua Boele: Aspiring Front-end Developer</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body>
+	<div id="wrapper">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="http://www.joshuaboele.com">Joshua Boele </a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="mailto:Josboele@gmail.com">Contact <span class="sr-only">(current)</span></a></li>
+						<li><a href="https://www.linkedin.com/in/joshuaboele">LinkedIn </a></li>
+					</ul>
+					</div>
+					</div>
+				</nav>
+			</div>
+		</nav>
+		<div id="calculator">
+			<!-- Scherm -->
+			<div class="top">
+				<span class="clear">C</span>
+				<div class="screen"></div>
+			</div>
+			<div class="keys">
+				<span>7</span>
+				<span>8</span>
+				<span>9</span>
+				<span class="operator">+</span>
+				<span>4</span>
+				<span>5</span>
+				<span>6</span>
+				<span class="operator">-</span>
+				<span>1</span>
+				<span>2</span>
+				<span>3</span>
+				<span class="operator">/</span>
+				<span>0</span>
+				<span>.</span>
+				<span class="eval">=</span>
+				<span class="operator">x</span>
+			</div>
+		</div>
+		<script src="http://thecodeplayer.com/uploads/js/prefixfree-1.0.7.js" type="text/javascript" type="text/javascript"></script>
+		<script type="text/javascript">
+// Get keys
+var keys = document.querySelectorAll('#calculator span');
+var operators = ['+', '-', '/', 'x'];
+var decimalAdded = false;
+
+// Add onclick event aan alle knoppen en uitvoeringen
+for(var i = 0; i < keys.length; i++) {
+	keys[i].onclick = function(e) {
+		// Get the input and button values
+		var input = document.querySelector('.screen');
+		var inputVal = input.innerHTML;
+		var btnVal = this.innerHTML;
+		
+		
+		if(btnVal == 'C') {
+			input.innerHTML = '';
+			decimalAdded = false;
+		}
+
+		else if(btnVal == '=') {
+			var equation = inputVal;
+			var lastChar = equation[equation.length - 1];
+			
+			equation = equation.replace(/x/g, '*').replace(/ /g, '/');
+			
+			if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+				equation = equation.replace(/.$/, '');
+			
+			if(equation)
+				input.innerHTML = eval(equation);
+				
+			decimalAdded = false;
+		}
+		
+		
+		else if(operators.indexOf(btnVal) > -1) {
+			
+			var lastChar = inputVal[inputVal.length - 1];
+			
+			
+			if(inputVal != '' && operators.indexOf(lastChar) == -1) 
+				input.innerHTML += btnVal;
+			
+			else if(inputVal == '' && btnVal == '-') 
+				input.innerHTML += btnVal;
+			
+			if(operators.indexOf(lastChar) > -1 && inputVal.length > 1) {
+	
+				input.innerHTML = inputVal.replace(/.$/, btnVal);
+			}
+			
+			decimalAdded =false;
+		}
+		
+		else if(btnVal == '.') {
+			if(!decimalAdded) {
+				input.innerHTML += btnVal;
+				decimalAdded = true;
+			}
+		}
+		
+		else {
+			input.innerHTML += btnVal;
+		}
+		
+		e.preventDefault();
+	} 
+}</script>
+	</body>
